@@ -25,7 +25,7 @@ app.use(
   })
 );
 app.use(helmet());
-//protext from user that try to input code
+//protect from user that try to input code
 app.use(cors());
 //cross origin server
 app.use(express.json());
