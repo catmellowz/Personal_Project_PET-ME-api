@@ -16,13 +16,13 @@ exports.register = async (req, res, next) => {
       where: {
         [Op.or]: [
           { email: value.email || '' },
-          { mobile: value.mobile || '' },
+          { username: value.username || '' },
         ],
       },
     });
 
     if (user) {
-      createError('email or mobile is already in use', 400);
+      createError('email or username is already in use', 400);
     }
 
     value.password = await bcrypt.hash(value.password, 12);
@@ -35,14 +35,7 @@ exports.register = async (req, res, next) => {
     next(err);
   }
 };
-//SLECT * FROM users WHERE email = value.email OR mobile = value.mobile
-
-// User.create({
-//   firstName: value.fistName,
-//   lastName: lastName,
-//   email: value.emailOrMobile,
-//   password: bcryp.hash(value.password),
-// });
+//SLECT * FROM users WHERE email = value.email OR username = value.username
 
 exports.login = async (req, res, next) => {
   try {
@@ -50,13 +43,13 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({
       where: {
         [Op.or]: [
-          { email: value.emailOrMobile },
-          { mobile: value.emailOrMobile },
+          { email: value.emailOrUsername },
+          { username: value.emailOrUsername },
         ],
       },
     });
     if (!user) {
-      createError('invalid email or mobile or password', 400);
+      createError('invalid email or username or password', 400);
     }
 
     const isCorrect = await bcrypt.compare(
@@ -64,7 +57,7 @@ exports.login = async (req, res, next) => {
       user.password
     );
     if (!isCorrect) {
-      createError('invalid email or mobile or password', 400);
+      createError('invalid email or username or password', 400);
     }
 
     const accessToken = jwt.sign(
@@ -73,7 +66,7 @@ exports.login = async (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        mobile: user.mobile,
+        username: user.username,
         coverImage: user.coverImage,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,

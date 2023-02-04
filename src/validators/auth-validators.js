@@ -12,14 +12,12 @@ const registerSchema = Joi.object({
     'string.empty': 'last name is required',
     'string.base': 'last name must be a string',
   }),
-  emailOrMobile: Joi.alternatives()
-    .try(
-      Joi.string().email({ tlds: false }),
-      Joi.string().pattern(/^[0-9]{10}$/)
-    )
+  emailOrUsername: Joi.alternatives()
+    .try(Joi.string().email({ tlds: false }), Joi.string())
+
     .messages({
       'alternatives.match':
-        'must be valid email address or modile number',
+        'must be valid email address or username number',
     })
     .strip(),
   password: Joi.string()
@@ -41,13 +39,13 @@ const registerSchema = Joi.object({
       'string.empty': 'confirm password is required',
     })
     .strip(),
-  email: Joi.forbidden().when('emailOrMobile', {
+  email: Joi.forbidden().when('emailOrUsername', {
     is: Joi.string().email({ tlds: false }),
-    then: Joi.string().default(Joi.ref('emailOrMobile')),
+    then: Joi.string().default(Joi.ref('emailOrUsername')),
   }),
-  mobile: Joi.forbidden().when('emailOrMobile', {
-    is: Joi.string().pattern(/^[0-9]{10}$/),
-    then: Joi.string().default(Joi.ref('emailOrMobile')),
+  username: Joi.forbidden().when('emailOrUsername', {
+    is: Joi.string(),
+    then: Joi.string().default(Joi.ref('emailOrUsername')),
   }),
 });
 
@@ -55,7 +53,7 @@ exports.validateRegister = validate(registerSchema);
 // exports.validateLogin = validate(loginSchema);
 
 const loginSchema = Joi.object({
-  emailOrMobile: Joi.string().required(),
+  emailOrUsername: Joi.string().required(),
   password: Joi.string().required(),
 });
 
