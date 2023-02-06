@@ -11,10 +11,12 @@ exports.addCart = async (req, res, next) => {
         },
       },
     });
-    res.status(201).json({ service });
 
-    console.log(service);
-    // const cart = await Cart.create({});
+    const cart = await Cart.create({
+      serviceId: service.id,
+      userId: req.user.id,
+    });
+    res.status(201).json({ cart });
   } catch (err) {
     next(err);
   }
