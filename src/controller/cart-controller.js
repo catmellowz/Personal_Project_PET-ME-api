@@ -1,4 +1,4 @@
-const { Cart, Service } = require('../models');
+const { Cart, Service, sequelize } = require('../models');
 
 exports.addCart = async (req, res, next) => {
   try {
