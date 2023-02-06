@@ -1,6 +1,4 @@
-const { Op } = require('sequelize');
-
-const { Cart, Service, sequelize } = require('../models');
+const { Cart, Service } = require('../models');
 
 exports.addCart = async (req, res, next) => {
   try {
@@ -85,6 +83,22 @@ exports.getCartItem = async (req, res, next) => {
     // console.log(service);
 
     res.status(200).json({ modifiedService });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteCart = async (req, res, next) => {
+  try {
+    const cartItem = await Cart.findOne({
+      where: {
+        userId: req.user.id,
+        id: +req.params.cartId,
+      },
+    });
+    // console.log(cartItem);
+    await cartItem.destroy();
+    res.status(204).json();
   } catch (err) {
     next(err);
   }
