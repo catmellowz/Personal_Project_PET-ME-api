@@ -67,7 +67,6 @@ exports.login = async (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         username: user.username,
-        coverImage: user.coverImage,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },

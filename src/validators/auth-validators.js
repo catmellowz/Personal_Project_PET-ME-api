@@ -50,7 +50,6 @@ const registerSchema = Joi.object({
 });
 
 exports.validateRegister = validate(registerSchema);
-// exports.validateLogin = validate(loginSchema);
 
 const loginSchema = Joi.object({
   emailOrUsername: Joi.string().required(),
