@@ -69,7 +69,19 @@ exports.getCartItem = async (req, res, next) => {
       group: ['service_id'],
     });
 
-    res.status(200).json({ service });
+    const modifiedService = service.map((s) => ({
+      service_id: s.service_id,
+      total_amount: s.total_amount,
+      id: s.Service.id,
+      image: s.Service.image,
+      title: s.Service.title,
+      description: s.Service.description,
+      price: s.Service.price,
+      createdAt: s.Service.createdAt,
+      updatedAt: s.Service.updatedAt,
+    }));
+
+    res.status(200).json({ modifiedService });
   } catch (err) {
     next(err);
   }
