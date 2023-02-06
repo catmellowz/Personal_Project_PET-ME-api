@@ -1,10 +1,12 @@
 const express = require('express');
-const router = require('./cart-router');
 const paymentController = require('../controller/payment-controller');
 const uploadSlip = require('../middlewares/upload');
+// const cloudinary = require('../utils/cloudinary');
+
+const router = express.Router();
 
 router.patch(
-  '/payment/uploadslip',
+  '/uploadslip',
   uploadSlip.single('slipImage'),
   paymentController.uploadSlip
 );

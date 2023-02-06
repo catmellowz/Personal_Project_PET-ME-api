@@ -37,7 +37,7 @@ app.use(express.json());
 app.use('/auth', authRoute);
 app.use('/', serviceRoute);
 app.use('/', authenMiddlwware, cartRoute);
-app.use('/', paymentRoute);
+app.use('/payment', paymentRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
