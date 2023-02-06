@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 
-const { Cart, Service } = require('../models');
+const { Cart, Service, sequelize } = require('../models');
 
 exports.addCart = async (req, res, next) => {
   try {
@@ -46,15 +46,27 @@ exports.getCartItem = async (req, res, next) => {
     // });
     // const serviceId = cartItem.map((el) => el.serviceId);
 
+    // const service = await Cart.findAll({
+    //   where: {
+    //     userId: req.user.id,
+    //   },
+    //   include: [
+    //     {
+    //       model: Service,
+    //     },
+    //   ],
+    // });
+
     const service = await Cart.findAll({
-      where: {
-        userId: req.user.id,
-      },
-      include: [
-        {
-          model: Service,
-        },
+      include: [{ model: Service }],
+      attributes: [
+        'service_id',
+        [
+          sequelize.fn('sum', sequelize.col('amount')),
+          'total_amount',
+        ],
       ],
+      group: ['service_id'],
     });
 
     res.status(200).json({ service });
