@@ -72,14 +72,17 @@ exports.getCartItem = async (req, res, next) => {
     const modifiedService = service.map((s) => ({
       service_id: s.service_id,
       total_amount: s.total_amount,
+      //cant find both of this
       id: s.Service.id,
       image: s.Service.image,
       title: s.Service.title,
       description: s.Service.description,
-      price: s.Service.price,
+      price: +s.Service.price,
       createdAt: s.Service.createdAt,
       updatedAt: s.Service.updatedAt,
     }));
+
+    // console.log(service);
 
     res.status(200).json({ modifiedService });
   } catch (err) {
