@@ -15,3 +15,12 @@ exports.addService = async (req, res, next) => {
 };
 
 //add data for create service like admin
+
+exports.getAllServices = async (req, res, next) => {
+  try {
+    const services = await Service.findAll({});
+    res.status(201).json({ services });
+  } catch (err) {
+    next(err);
+  }
+};
