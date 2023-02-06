@@ -46,14 +46,15 @@ exports.getCartItem = async (req, res, next) => {
     // });
     // const serviceId = cartItem.map((el) => el.serviceId);
 
-    // const service = await Service.findAndCountAll({
-    //   where: {
-    //     id: [req.user.id, ...serviceId],
-    //   },
-    // });
-
-    const service = await Cart.findAndCountAll({
-      include: [{ model: Service }],
+    const service = await Cart.findAll({
+      where: {
+        userId: req.user.id,
+      },
+      include: [
+        {
+          model: Service,
+        },
+      ],
     });
 
     res.status(200).json({ service });

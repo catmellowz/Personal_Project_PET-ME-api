@@ -1,5 +1,15 @@
 module.exports = (sequelize, DataType) => {
-  const Cart = sequelize.define('Cart', {}, { underscored: true });
+  const Cart = sequelize.define(
+    'Cart',
+    {
+      amount: {
+        type: DataType.TINYINT,
+        defaultValue: 1,
+        allowNull: false,
+      },
+    },
+    { underscored: true }
+  );
   Cart.associate = (db) => {
     Cart.belongsTo(db.User, {
       foreignKey: {
