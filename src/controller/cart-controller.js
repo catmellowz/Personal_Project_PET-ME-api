@@ -104,7 +104,7 @@ exports.deleteCart = async (req, res, next) => {
       await cartItem.destroy();
     }
 
-    res.status(200).json({ cartItem });
+    res.status(204).json({ cartItem });
   } catch (err) {
     next(err);
   }
