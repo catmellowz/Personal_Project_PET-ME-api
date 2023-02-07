@@ -2,7 +2,6 @@ const {
   validateRegister,
   validateLogin,
 } = require('../validators/auth-validators');
-const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -14,15 +13,12 @@ exports.register = async (req, res, next) => {
     const value = validateRegister(req.body);
     const user = await User.findOne({
       where: {
-        [Op.or]: [
-          { email: value.email || '' },
-          { username: value.username || '' },
-        ],
+        email: value.email,
       },
     });
 
     if (user) {
-      createError('email or username is already in use', 400);
+      createError('email is already in use', 400);
     }
 
     value.password = await bcrypt.hash(value.password, 12);
@@ -35,21 +31,18 @@ exports.register = async (req, res, next) => {
     next(err);
   }
 };
-//SLECT * FROM users WHERE email = value.email OR username = value.username
+//SLECT * FROM users WHERE email = value.email
 
 exports.login = async (req, res, next) => {
   try {
     const value = validateLogin(req.body);
     const user = await User.findOne({
       where: {
-        [Op.or]: [
-          { email: value.emailOrUsername },
-          { username: value.emailOrUsername },
-        ],
+        email: value.email,
       },
     });
     if (!user) {
-      createError('invalid email or username or password', 400);
+      createError('invalid email or password', 400);
     }
 
     const isCorrect = await bcrypt.compare(
@@ -57,7 +50,7 @@ exports.login = async (req, res, next) => {
       user.password
     );
     if (!isCorrect) {
-      createError('invalid email or username or password', 400);
+      createError('invalid email or password', 400);
     }
 
     const accessToken = jwt.sign(
@@ -66,7 +59,6 @@ exports.login = async (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        username: user.username,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },

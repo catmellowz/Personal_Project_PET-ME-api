@@ -44,7 +44,7 @@ exports.getCartItem = async (req, res, next) => {
     // });
     // const serviceId = cartItem.map((el) => el.serviceId);
 
-    // const service = await Cart.findAll({
+    // const serviceInCart = await Cart.findAll({
     //   where: {
     //     userId: req.user.id,
     //   },
@@ -55,7 +55,7 @@ exports.getCartItem = async (req, res, next) => {
     //   ],
     // });
 
-    const service = await Cart.findAll({
+    const serviceInCart = await Cart.findAll({
       include: [{ model: Service }],
       attributes: [
         'service_id',
@@ -67,7 +67,7 @@ exports.getCartItem = async (req, res, next) => {
       group: ['service_id'],
     });
 
-    const modifiedService = service.map((s) => ({
+    const modifiedService = serviceInCart.map((s) => ({
       service_id: s.service_id,
       total_amount: s.total_amount,
       //cant find both of this
@@ -80,7 +80,7 @@ exports.getCartItem = async (req, res, next) => {
       updatedAt: s.Service.updatedAt,
     }));
 
-    // console.log(service);
+    console.log(service);
 
     res.status(200).json({ modifiedService });
   } catch (err) {

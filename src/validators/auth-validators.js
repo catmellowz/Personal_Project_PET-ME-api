@@ -12,14 +12,10 @@ const registerSchema = Joi.object({
     'string.empty': 'last name is required',
     'string.base': 'last name must be a string',
   }),
-  emailOrUsername: Joi.alternatives()
-    .try(Joi.string().email({ tlds: false }), Joi.string())
+  email: Joi.string().email({ tlds: false }).messages({
+    'string.empty': 'email is required',
+  }),
 
-    .messages({
-      'alternatives.match':
-        'must be valid email address or username number',
-    })
-    .strip(),
   password: Joi.string()
     .alphanum()
     .min(6)
@@ -39,20 +35,12 @@ const registerSchema = Joi.object({
       'string.empty': 'confirm password is required',
     })
     .strip(),
-  email: Joi.forbidden().when('emailOrUsername', {
-    is: Joi.string().email({ tlds: false }),
-    then: Joi.string().default(Joi.ref('emailOrUsername')),
-  }),
-  username: Joi.forbidden().when('emailOrUsername', {
-    is: Joi.string(),
-    then: Joi.string().default(Joi.ref('emailOrUsername')),
-  }),
 });
 
 exports.validateRegister = validate(registerSchema);
 
 const loginSchema = Joi.object({
-  emailOrUsername: Joi.string().required(),
+  email: Joi.string().required(),
   password: Joi.string().required(),
 });
 

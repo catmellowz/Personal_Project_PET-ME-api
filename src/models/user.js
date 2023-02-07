@@ -24,20 +24,16 @@ module.exports = (sequelize, DataType) => {
           isEmail: true,
         },
       },
-      username: {
-        type: DataType.STRING,
-        unique: true,
-        validate: {
-          notEmpty: true,
-        },
-      },
+
       password: {
         type: DataType.STRING,
         allowNull: false,
       },
-      isAdmin: DataType.BOOLEAN,
+      isAdmin: {
+        type: DataType.BOOLEAN,
+        defaultValue: false,
+      },
     },
-
     { underscored: true }
   );
 

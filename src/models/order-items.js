@@ -3,7 +3,7 @@ module.exports = (sequelize, DataType) => {
     'OrderItem',
     {
       amount: {
-        type: DataType.DECIMAL(10, 2),
+        type: DataType.DECIMAL(10),
         allowNull: false,
       },
     },
