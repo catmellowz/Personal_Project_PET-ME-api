@@ -1,5 +1,5 @@
 const { Cart, Service, sequelize } = require('../models');
-
+//add service to cart
 exports.addCart = async (req, res, next) => {
   try {
     //  find service
@@ -8,6 +8,7 @@ exports.addCart = async (req, res, next) => {
         serviceId: req.body.serviceId,
       },
     });
+    //condition if find the save service where id is will update amount + 1
     if (service) {
       const updateAmount = await Cart.update(
         {
@@ -19,7 +20,7 @@ exports.addCart = async (req, res, next) => {
         .status(200)
         .json({ message: 'success update service in cart' });
     } else {
-      //create service from font
+      //if not found service_id  will create new service
       await Cart.create({
         serviceId: req.body.serviceId,
         userId: req.user.id,
@@ -53,32 +54,32 @@ exports.getCartItem = async (req, res, next) => {
     //     serviceId: req.body.serviceId,
     //   },
     // });
-    // res.status(201).json({ amount });
-    //   const serviceInCart = await Cart.findAll({
-    //     include: [{ model: Service }],
-    //     attributes: [
-    //       'service_id',
-    //       [
-    //         sequelize.fn('sum', sequelize.col('amount')),
-    //         'total_amount',
-    //       ],
-    //     ],
-    //     group: ['service_id'],
-    //   });
-    //   const modifiedService = serviceInCart.map((s) => ({
-    //     service_id: s.service_id,
-    //     total_amount: s.total_amount,
-    //     //cant find both of this
-    //     id: s.Service.id,
-    //     image: s.Service.image,
-    //     title: s.Service.title,
-    //     description: s.Service.description,
-    //     price: +s.Service.price,
-    //     createdAt: s.Service.createdAt,
-    //     updatedAt: s.Service.updatedAt,
-    //   }));
-    //   console.log(service);
-    //   res.status(200).json({ modifiedService });
+
+    const serviceInCart = await Cart.findAll({
+      include: [{ model: Service }],
+      attributes: [
+        'service_id',
+        [
+          sequelize.fn('sum', sequelize.col('amount')),
+          'total_amount',
+        ],
+      ],
+      group: ['service_id'],
+    });
+    // const modifiedService = serviceInCart.map((s) => ({
+    //   service_id: s.service_id,
+    //   total_amount: s.total_amount,
+    //   //cant find both of this
+    //   id: s.Service.id,
+    //   image: s.Service.image,
+    //   title: s.Service.title,
+    //   description: s.Service.description,
+    //   price: +s.Service.price,
+    //   createdAt: s.Service.createdAt,
+    //   updatedAt: s.Service.updatedAt,
+    // }));
+
+    res.status(200).json({ serviceInCart });
   } catch (err) {
     next(err);
   }
@@ -92,9 +93,18 @@ exports.deleteCart = async (req, res, next) => {
         id: +req.params.cartId,
       },
     });
-    // console.log(cartItem);
-    await cartItem.destroy();
-    res.status(204).json();
+    // Decrement the amount by 1 if there are more than one
+    if (cartItem.amount > 1) {
+      await Cart.update(
+        { amount: cartItem.amount - 1 },
+        { where: { id: +req.params.cartId } }
+      );
+    } else {
+      // If there's only one item, destroy the entire row
+      await cartItem.destroy();
+    }
+
+    res.status(200).json({ cartItem });
   } catch (err) {
     next(err);
   }
