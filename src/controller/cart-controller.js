@@ -35,12 +35,12 @@ exports.addCart = async (req, res, next) => {
 
 exports.getAmount = async (req, res, next) => {
   try {
-    const amount = await Cart.count({
+    const amount = await Cart.sum('amount', {
       where: {
         userId: req.user.id,
       },
     });
-    res.status(201).json({ amount });
+    res.status(200).json({ amount });
   } catch (err) {
     next(err);
   }
