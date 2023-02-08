@@ -4,13 +4,12 @@ module.exports = (sequelize, DataType) => {
   const Order = sequelize.define(
     'Order',
     {
-      date: {
-        type: DataType.DATE,
-        allowNull: false,
-      },
+      // date: {
+      //   type: DataType.DATE,
+      //   allowNull: false,
+      // },
       totalPrice: {
         type: DataType.DECIMAL(10, 2),
-        allowNull: false,
       },
       slipImage: {
         type: DataType.STRING,
