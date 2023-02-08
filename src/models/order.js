@@ -19,7 +19,7 @@ module.exports = (sequelize, DataType) => {
         },
       },
       status: {
-        type: DataType.ENUM(ONPROCESS, APPROVE),
+        type: DataType.ENUM(ONPROCESS, APPROVE, CANCEL),
         allowNull: false,
         defaultValue: ONPROCESS,
       },

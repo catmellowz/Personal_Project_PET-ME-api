@@ -6,6 +6,10 @@ module.exports = (sequelize, DataType) => {
         type: DataType.DECIMAL(10),
         allowNull: false,
       },
+      price: {
+        type: DataType.DECIMAL(10, 2),
+        allowNull: false,
+      },
     },
     { underscored: true }
   );
