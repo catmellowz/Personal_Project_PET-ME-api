@@ -28,10 +28,11 @@ app.use(
     message: { message: 'too many request, please stop send!!' },
   })
 );
-app.use(helmet());
 //protect from user that try to input code
-app.use(cors());
+app.use(helmet());
 //cross origin server
+app.use(cors());
+// parsing req body
 app.use(express.json());
 
 app.use('/auth', authRoute);

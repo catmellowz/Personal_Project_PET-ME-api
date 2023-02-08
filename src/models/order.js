@@ -1,3 +1,5 @@
+const { ONPROCESS, APPROVE, CANCEL } = require('../config/constant');
+
 module.exports = (sequelize, DataType) => {
   const Order = sequelize.define(
     'Order',
@@ -16,11 +18,11 @@ module.exports = (sequelize, DataType) => {
           notEmpty: true,
         },
       },
-      // status: {
-      //   type: DataType.ENUM(ON_PROCESS, APPROVE, REJECT),
-      //   allowNull: false,
-      //   defaultValue: ON_PROCESS,
-      // },
+      status: {
+        type: DataType.ENUM(ONPROCESS, APPROVE, CANCEL),
+        allowNull: false,
+        defaultValue: ONPROCESS,
+      },
     },
     { underscored: true }
   );

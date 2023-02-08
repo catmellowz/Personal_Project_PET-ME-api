@@ -6,9 +6,9 @@ const uploadSlip = require('../middlewares/upload');
 const router = express.Router();
 
 router.patch(
-  '/uploadslip',
+  '/',
   uploadSlip.single('slipImage'),
-  paymentController.uploadSlip
+  paymentController.uploadSlipImage
 );
 
 module.exports = router;
