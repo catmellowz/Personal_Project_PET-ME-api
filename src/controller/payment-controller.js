@@ -47,6 +47,7 @@ exports.createOrder = async (req, res, next) => {
         amount: item.dataValues.total_amount,
       };
     });
+    //insert multiple records into a database table at once
     await OrderItem.bulkCreate(createOrderItem);
 
     res.status(200).json('already create order');
