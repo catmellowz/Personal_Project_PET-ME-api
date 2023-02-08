@@ -90,21 +90,21 @@ exports.deleteCart = async (req, res, next) => {
     const cartItem = await Cart.findOne({
       where: {
         userId: req.user.id,
-        id: +req.params.cartId,
+        serviceId: +req.params.serviceId,
       },
     });
     // Decrement the amount by 1 if there are more than one
     if (cartItem.amount > 1) {
-      await Cart.update(
-        { amount: cartItem.amount - 1 },
-        { where: { id: +req.params.cartId } }
-      );
+      await cartItem.update({
+        amount: cartItem.amount - 1,
+      });
+
+      await cartItem.save();
     } else {
       // If there's only one item, destroy the entire row
       await cartItem.destroy();
     }
-
-    res.status(204).json({ cartItem });
+    res.status(200).json({ cartItem });
   } catch (err) {
     next(err);
   }
