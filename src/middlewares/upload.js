@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
         '' +
         Math.round(Math.random() * 1000000000) +
         '.' +
+        //mimetype: 'image/jpeg'
         file.mimetype.split('/')[1]
     );
     //random number file uploaded
