@@ -23,7 +23,7 @@ exports.createOrder = async (req, res, next) => {
   try {
     const createOrderId = await Order.create({
       userId: req.user.id,
-      slipImage: req.slipImage.id,
+      slipImage: req.body.slipImage,
     });
 
     // find and get item in cart
@@ -41,6 +41,7 @@ exports.createOrder = async (req, res, next) => {
 
     const createOrderItem = await serviceInCart.map((item) => {
       return {
+        //access the values of the columns of a model instance
         orderId: createOrderId.id,
         serviceId: item.dataValues.service_id,
         price: item.dataValues.Service.price,
