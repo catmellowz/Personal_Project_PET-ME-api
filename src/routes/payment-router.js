@@ -14,4 +14,6 @@ router.post(
 
 router.post('/', paymentController.createOrder);
 
+router.delete('/', cartController.clearCart);
+
 module.exports = router;

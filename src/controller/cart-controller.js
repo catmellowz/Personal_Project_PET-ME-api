@@ -104,7 +104,22 @@ exports.deleteCart = async (req, res, next) => {
       // If there's only one item, destroy the entire row
       await cartItem.destroy();
     }
-    res.status(200).json({ cartItem });
+    res.status(204).json({ cartItem });
+  } catch (err) {
+    next(err);
+  }
+};
+//clear cart after create order
+exports.clearCart = async (req, res, next) => {
+  try {
+    await Cart.destroy({
+      where: {
+        userId: req.user.id,
+      },
+    });
+
+    // console.log(clearItem);
+    res.status(204).json();
   } catch (err) {
     next(err);
   }
