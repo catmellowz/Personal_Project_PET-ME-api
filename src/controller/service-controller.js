@@ -1,13 +1,17 @@
 const { Service } = require('../models');
+const cloudinary = require('../utils/cloudinary');
 
 exports.addService = async (req, res, next) => {
   try {
+    const image = await cloudinary.upload(req.file.path);
+
     const service = await Service.create({
-      image: req.body.image,
+      image: image,
       title: req.body.title,
       description: req.body.description,
       price: req.body.price,
     });
+    // console.log(req.body);
     res.status(201).json({ service });
   } catch (err) {
     next(err);

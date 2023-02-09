@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
     }
     const token = authorization.split(' ')[1];
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log('payload', payload);
+    // console.log('payload', payload);
     const user = await User.findOne({
       where: { id: payload.id },
       attributes: { exclude: ['password'] },
