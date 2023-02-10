@@ -51,7 +51,7 @@ exports.createOrder = async (req, res, next) => {
     //insert multiple records into a database table at once
     await OrderItem.bulkCreate(createOrderItem);
 
-    res.status(200).json('already create order');
+    res.status(201).json('already create order');
   } catch (err) {
     next(err);
   }

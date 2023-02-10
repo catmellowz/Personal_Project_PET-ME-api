@@ -10,7 +10,7 @@ exports.upload = async (filePath, publicId) => {
   if (publicId) {
     option.public_id = publicId;
   }
-  const result = await cloudinary.uploader.upload(filePath);
+  const result = await cloudinary.uploader.upload(filePath, option);
   // console.log(result);
   return result.secure_url;
 };
