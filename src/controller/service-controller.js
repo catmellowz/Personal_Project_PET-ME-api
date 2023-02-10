@@ -23,7 +23,7 @@ exports.addService = async (req, res, next) => {
 exports.getAllServices = async (req, res, next) => {
   try {
     const services = await Service.findAll({});
-    res.status(201).json({ services });
+    res.status(200).json({ services });
   } catch (err) {
     next(err);
   }
