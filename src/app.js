@@ -13,6 +13,7 @@ const authRoute = require('./routes/auth-route');
 const serviceRoute = require('./routes/service-router');
 const cartRoute = require('./routes/cart-router');
 const paymentRoute = require('./routes/payment-router');
+const orderRoute = require('./routes/order-router');
 const notFoundMiddleware = require('./middlewares/not-found');
 const authenMiddlwware = require('./middlewares/authenticate');
 const errorMiddleware = require('./middlewares/error');
@@ -39,6 +40,7 @@ app.use('/auth', authRoute);
 app.use('/', serviceRoute);
 app.use('/', authenMiddlwware, cartRoute);
 app.use('/payment', paymentRoute);
+app.use('/order', orderRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

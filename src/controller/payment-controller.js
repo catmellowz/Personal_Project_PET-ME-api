@@ -56,3 +56,18 @@ exports.createOrder = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.createOrderHistory = async (req, res, next) => {
+  try {
+    const createItem = await Order.findAll({
+      where: {
+        userId: req.user.id,
+      },
+      include: [{ model: OrderItem }],
+    });
+
+    res.status(200).json(createItem);
+  } catch (err) {
+    next(err);
+  }
+};
