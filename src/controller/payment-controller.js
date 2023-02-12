@@ -38,7 +38,7 @@ exports.createOrder = async (req, res, next) => {
       ],
       group: ['service_id'],
     });
-
+    // map service id with orderId
     const createOrderItem = await serviceInCart.map((item) => {
       return {
         //access the values of the columns of a model instance
@@ -51,7 +51,22 @@ exports.createOrder = async (req, res, next) => {
     //insert multiple records into a database table at once
     await OrderItem.bulkCreate(createOrderItem);
 
-    res.status(201).json('already create order');
+    // sum total price
+    const totalPrice = createOrderItem.reduce((sum, value) => {
+      return +value.price * +value.amount + sum;
+    }, 0);
+
+    // update totalPrice to database
+    await Order.update(
+      { totalPrice: totalPrice },
+      {
+        where: {
+          id: createOrderId.id,
+          userId: req.user.id,
+        },
+      }
+    );
+    res.status(201).json({ createOrderItem });
   } catch (err) {
     next(err);
   }

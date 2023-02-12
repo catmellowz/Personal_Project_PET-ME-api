@@ -13,9 +13,9 @@ const authRoute = require('./routes/auth-route');
 const serviceRoute = require('./routes/service-router');
 const cartRoute = require('./routes/cart-router');
 const paymentRoute = require('./routes/payment-router');
-const orderRoute = require('./routes/order-router');
+const orderRoute = require('./routes/payment-router');
 const notFoundMiddleware = require('./middlewares/not-found');
-const authenMiddlwware = require('./middlewares/authenticate');
+const authenMiddleware = require('./middlewares/authenticate');
 const errorMiddleware = require('./middlewares/error');
 
 const app = express();
@@ -38,9 +38,9 @@ app.use(express.json());
 
 app.use('/auth', authRoute);
 app.use('/', serviceRoute);
-app.use('/', authenMiddlwware, cartRoute);
+app.use('/', authenMiddleware, cartRoute);
 app.use('/payment', paymentRoute);
-app.use('/order', orderRoute);
+app.use('/orderhistory', orderRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
