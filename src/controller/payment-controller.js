@@ -91,20 +91,46 @@ exports.createOrderHistory = async (req, res, next) => {
   }
 };
 
+// exports.orderAdmin = async (req, res, next) => {
+//   try {
+//     const createItem = await Order.findAll({
+//       include: {
+//         model: OrderItem,
+//         include: { model: Service, attributes: ['title'] },
+//       },
+//       include: {
+//         model: User,
+//         attributes: ['firstName', 'lastName'],
+//       },
+//     });
+
+//     res.status(200).json(createItem);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 exports.orderAdmin = async (req, res, next) => {
   try {
     const createItem = await Order.findAll({
-      include: {
-        model: OrderItem,
-        include: { model: Service, attributes: ['title'] },
-      },
-      include: {
-        model: User,
-        attributes: ['firstName', 'lastName'],
-      },
+      include: [
+        {
+          model: OrderItem,
+          include: { model: Service, attributes: ['title'] },
+        },
+        {
+          model: User,
+          attributes: ['firstName', 'lastName'],
+        },
+      ],
     });
 
-    res.status(200).json(createItem);
+    const orderData = createItem.map((order) => ({
+      order,
+      title: order.title,
+    }));
+
+    res.status(200).json(orderData);
   } catch (err) {
     next(err);
   }
