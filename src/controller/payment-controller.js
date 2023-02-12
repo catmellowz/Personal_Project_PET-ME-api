@@ -135,3 +135,21 @@ exports.orderAdmin = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.statusOrder = async (req, res, next) => {
+  try {
+    const findOrder = await Order.findOne({
+      where: {
+        id: req.body.orderId,
+      },
+    });
+
+    await findOrder.update({
+      status: req.body.status,
+    });
+
+    res.status(200).json(findOrder);
+  } catch (err) {
+    next(err);
+  }
+};

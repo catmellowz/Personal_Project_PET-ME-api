@@ -19,4 +19,6 @@ router.get('/', paymentController.createOrderHistory);
 
 router.get('/admin', paymentController.orderAdmin);
 
+router.put('/status', paymentController.statusOrder);
+
 module.exports = router;
