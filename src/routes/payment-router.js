@@ -17,4 +17,6 @@ router.delete('/', cartController.clearCart);
 
 router.get('/', paymentController.createOrderHistory);
 
+router.get('/admin', paymentController.orderAdmin);
+
 module.exports = router;

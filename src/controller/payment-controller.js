@@ -5,6 +5,7 @@ const {
   Order,
   OrderItem,
   sequelize,
+  User,
 } = require('../models');
 
 exports.uploadSlipImage = async (req, res, next) => {
@@ -75,9 +76,31 @@ exports.createOrder = async (req, res, next) => {
 exports.createOrderHistory = async (req, res, next) => {
   try {
     const createItem = await Order.findAll({
+      where: {
+        userId: req.user.id,
+      },
       include: {
         model: OrderItem,
         include: { model: Service, attributes: ['title'] },
+      },
+    });
+
+    res.status(200).json(createItem);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.orderAdmin = async (req, res, next) => {
+  try {
+    const createItem = await Order.findAll({
+      include: {
+        model: OrderItem,
+        include: { model: Service, attributes: ['title'] },
+      },
+      include: {
+        model: User,
+        attributes: ['firstName', 'lastName'],
       },
     });
 
