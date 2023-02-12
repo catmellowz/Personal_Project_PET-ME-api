@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 app.use(
   rateLimit({
     windowMs: 1000 * 60 * 15,
-    max: 1000,
+    max: 10000,
     message: { message: 'too many request, please stop send!!' },
   })
 );

@@ -27,42 +27,48 @@
 
 // const service = [
 //   {
-//     image: 'https://picsum.photos/300',
+//     image:
+//       'https://res.cloudinary.com/dbk1oigig/image/upload/v1675955191/p1_mh1mck.jpg',
 //     title: 'Shower',
 //     description:
 //       'There is a separate shower room for dogs and cats. To keep the cat calm, not panicked or shocked during the service.',
 //     price: 500,
 //   },
 //   {
-//     image: 'https://picsum.photos/300',
+//     image:
+//       'https://res.cloudinary.com/dbk1oigig/image/upload/v1675955699/p2_yslezo.jpg',
 //     title: 'Hair and nail Spa',
 //     description:
 //       'Bath and hair cut service we pay attention to every detail. There is control in every process to meet the hospital standards.',
 //     price: 500,
 //   },
 //   {
-//     image: 'https://picsum.photos/300',
+//     image:
+//       'https://res.cloudinary.com/dbk1oigig/image/upload/v1675955078/p3_ils16k.jpg',
 //     title: 'Check up',
 //     description:
 //       'Pet Hospital is dedicated to providing the most effective treatment for every patient. and according to international principles ',
 //     price: 800,
 //   },
 //   {
-//     image: 'https://picsum.photos/300',
+//     image:
+//       'https://res.cloudinary.com/dbk1oigig/image/upload/v1675955078/p4_zoazrr.jpg',
 //     title: 'Shower, Hair cut and Nail spa',
 //     description:
 //       'There is a separate shower room for dogs and cats. Hair and nail cut',
-//     price: 500,
+//     price: 800,
 //   },
 //   {
-//     image: 'https://picsum.photos/300',
+//     image:
+//       'https://res.cloudinary.com/dbk1oigig/image/upload/v1675955078/p5_snci68.jpg',
 //     title: 'check up and shower',
 //     description:
 //       'There is a separate shower room for dogs and cats.Include check up program',
 //     price: 1000,
 //   },
 //   {
-//     image: 'https://picsum.photos/300',
+//     image:
+//       'https://res.cloudinary.com/dbk1oigig/image/upload/v1675955078/p6_pr6xxe.jpg',
 //     title: 'ALL IN ONE',
 //     description: 'Shower time, hair, nail cut and check up.',
 //     price: 1500,
