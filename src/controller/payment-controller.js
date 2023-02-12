@@ -143,6 +143,7 @@ exports.statusOrder = async (req, res, next) => {
         id: req.body.orderId,
       },
     });
+    //update status get data from font
 
     await findOrder.update({
       status: req.body.status,
