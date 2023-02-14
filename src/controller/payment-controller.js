@@ -125,12 +125,12 @@ exports.orderAdmin = async (req, res, next) => {
       ],
     });
 
-    const orderData = createItem.map((order) => ({
-      order,
-      title: order.title,
-    }));
+    // const orderData = createItem.map((order) => ({
+    //   order,
+    //   title: order.title,
+    // }));
 
-    res.status(200).json(orderData);
+    res.status(200).json(createItem);
   } catch (err) {
     next(err);
   }
@@ -142,8 +142,8 @@ exports.statusOrder = async (req, res, next) => {
       where: {
         id: req.body.orderId,
       },
+      //update status get data from font
     });
-    //update status get data from font
 
     await findOrder.update({
       status: req.body.status,
