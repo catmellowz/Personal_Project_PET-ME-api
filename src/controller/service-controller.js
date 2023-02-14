@@ -12,7 +12,7 @@ exports.addService = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
     });
-    console.log(req.file);
+    // console.log(req.file);
     res.status(201).json({ service });
   } catch (err) {
     next(err);
